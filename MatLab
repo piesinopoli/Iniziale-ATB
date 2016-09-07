@@ -42,9 +42,9 @@ if (clientIDint>-1)
     pause;
     clc;
     prompt = 'Premi A per muovere a sinistra, D per muovere a destra e Z per acquisire.';
+    a = 'a';
     
-    
-    if input(prompt)=='a'%da aggiustare
+    if input(prompt)==a
         %definisco l'handle del joint e lo faccio ruotare 
         [returnCode1,handle1]=vrep.simxGetObjectHandle(clientIDint,'Joint',vrep.simx_opmode_blocking);
         [returnCode2]=vrep.simxSetJointTargetPosition(clientIDint,handle1,0.5,vrep.simx_opmode_oneshot_wait);
