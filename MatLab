@@ -41,34 +41,44 @@ if (clientIDint>-1)
     disp('Premi un tasto per iniziare...');
     pause;
     clc;
-    prompt = 'Premi A per muovere a sinistra, D per muovere a destra e Z per acquisire.';
-    a = 'a';
     
-    if input(prompt)==a
-        %definisco l'handle del joint e lo faccio ruotare 
-        [returnCode1,handle1]=vrep.simxGetObjectHandle(clientIDint,'Joint',vrep.simx_opmode_blocking);
-        [returnCode2]=vrep.simxSetJointTargetPosition(clientIDint,handle1,0.5,vrep.simx_opmode_oneshot_wait);
+    while 1
+        
+        prompt = 'Premi A per muovere a sinistra, D per muovere a destra e Z per acquisire.';
+        a = 'a';
+        d = 'd';
+        z = 'z';
+    
+        if input(prompt)==a
+            %definisco l'handle del joint e lo faccio ruotare 
+            [returnCode1,handle1]=vrep.simxGetObjectHandle(clientIDint,'Joint',vrep.simx_opmode_blocking);
+            [returnCode2]=vrep.simxSetJointTargetPosition(clientIDint,handle1,0.5,vrep.simx_opmode_oneshot_wait);
+        end
+    
+        if input(prompt)==d
+            %definisco l'handle del joint e lo faccio ruotare 
+            [returnCode1,handle1]=vrep.simxGetObjectHandle(clientIDint,'Joint',vrep.simx_opmode_blocking);
+            [returnCode2]=vrep.simxSetJointTargetPosition(clientIDint,handle1,-0.5,vrep.simx_opmode_oneshot_wait);
+        end
+    
+    
+        if input(prompt)==z
+            %definisco l'handle del sensore di visione e acquisisco l'immagine 
+            [returnCode3,handle2]=vrep.simxGetObjectHandle(clientIDint,'Sensor1',vrep.simx_opmode_blocking);
+            [returnCode4,resolution,image]=vrep.simxGetVisionSensorImage2(clientIDint,handle2,0,vrep.simx_opmode_oneshot_wait);
+            pause(1);
+            figure, imshow(image);
+        end
+        
     end
     
-    disp('Premi un tasto. !!!!TEMPORANEO!!!!');
-    pause;
-    
-    %definisco l'handle del sensore di visione e acquisisco l'immagine 
-    [returnCode3,handle2]=vrep.simxGetObjectHandle(clientIDint,'Sensor1',vrep.simx_opmode_blocking);
-    [returnCode4,resolution,image]=vrep.simxGetVisionSensorImage2(clientIDint,handle2,0,vrep.simx_opmode_oneshot_wait);
-    pause(1);
-    figure, imshow(image);
-
-        
-        
-    disp('CTRL + C');
-    pause;
-    clc;
+disp('CTRL + C');
+pause;
+clc;
     
     
-    
-    vrep.simxStopSimulation(clientIDint,vrep.simx_opmode_blocking);
-    vrep.simxFinish(clientIDint);
+vrep.simxStopSimulation(clientIDint,vrep.simx_opmode_blocking);
+vrep.simxFinish(clientIDint);
     
 else
     
