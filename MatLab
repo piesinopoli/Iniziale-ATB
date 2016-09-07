@@ -1,0 +1,83 @@
+clc;
+clear;
+
+disp('Inzio del programma.');
+pause(1);
+clc;
+
+disp('Avvio connessione.');
+pause(0.5);
+clc;
+disp('Avvio connessione..');
+pause(0.5);
+clc;
+disp('Avvio connessione....');
+pause(0.5);
+clc;
+disp('Avvio connessione.....');
+pause(0.5);
+clc;
+disp('Avvio connessione......');
+pause(0.5);
+clc;
+
+vrep=remApi('remoteApi');
+vrep.simxFinish(-1);
+clientIDint=vrep.simxStart('127.0.0.1',19997,true,true,5000,5);%avvio connessione
+pause(0.1);
+clc;
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+
+if (clientIDint>-1)
+    
+    vrep.simxStartSimulation(clientIDint,vrep.simx_opmode_oneshot);%avvio simulazione
+    
+    disp('Connesso al server API!');
+    pause(2);
+    clc;
+   
+    
+    disp('Premi un tasto per iniziare...');
+    pause;
+    clc;
+    prompt = 'Premi A per muovere a sinistra, D per muovere a destra e Z per acquisire.';
+    
+    
+    if input(prompt)=='a'%da aggiustare
+        %definisco l'handle del joint e lo faccio ruotare 
+        [returnCode1,handle1]=vrep.simxGetObjectHandle(clientIDint,'Joint',vrep.simx_opmode_blocking);
+        [returnCode2]=vrep.simxSetJointTargetPosition(clientIDint,handle1,0.5,vrep.simx_opmode_oneshot_wait);
+    end
+    
+    disp('Premi un tasto. !!!!TEMPORANEO!!!!');
+    pause;
+    
+    %definisco l'handle del sensore di visione e acquisisco l'immagine 
+    [returnCode3,handle2]=vrep.simxGetObjectHandle(clientIDint,'Sensor1',vrep.simx_opmode_blocking);
+    [returnCode4,resolution,image]=vrep.simxGetVisionSensorImage2(clientIDint,handle2,0,vrep.simx_opmode_oneshot_wait);
+    pause(1);
+    figure, imshow(image);
+
+        
+        
+    disp('CTRL + C');
+    pause;
+    clc;
+    
+    
+    
+    vrep.simxStopSimulation(clientIDint,vrep.simx_opmode_blocking);
+    vrep.simxFinish(clientIDint);
+    
+else
+    
+    disp('Errore nel connettersi al server API.');
+    pause(3);
+    clc;
+    
+end 
+
+    disp('Programma concluso.');
+    pause(3);
+    clc;
