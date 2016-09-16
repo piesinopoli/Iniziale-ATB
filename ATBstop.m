@@ -2,13 +2,9 @@
     
     global vrep clientIDint
     
-    vrep.simxStopSimulation(clientIDint,vrep.simx_opmode_oneshot);
-    pause(0.1);
+    vrep.simxStopSimulation(clientIDint,vrep.simx_opmode_oneshot_wait);
     vrep.simxFinish(clientIDint);
     
     delete(gcf);
-    
-    clear;
-    clc;
     
 end

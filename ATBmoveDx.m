@@ -1,17 +1,14 @@
-function ATBmoveDx(btn, handle1)
+function ATBmoveDx(btn2, handle2)
 
-    global vrep clientIDint
+    global vrep clientIDint jointHan1
     
-    [jointHanErr2,jointHan1]=vrep.simxGetObjectHandle(clientIDint,'Joint',vrep.simx_opmode_blocking);
+    [jointVelErr3]=vrep.simxSetJointTargetVelocity(clientIDint,jointHan1,-1,vrep.simx_opmode_oneshot_wait);
     
-    [jointVelErr2]=vrep.simxSetJointTargetVelocity(clientIDint,jointHan1,0.5,vrep.simx_opmode_oneshot_wait);
+    pause(0.05);
     
-    pause(0.2);
+    [jointVelErr4]=vrep.simxSetJointTargetVelocity(clientIDint,jointHan1,0,vrep.simx_opmode_oneshot_wait);
     
-    [jointVelErr3]=vrep.simxSetJointTargetVelocity(clientIDint,jointHan1,0,vrep.simx_opmode_oneshot_wait);
+    ATBvision();
     
-    clear;
-    clc;
-
 end
 
