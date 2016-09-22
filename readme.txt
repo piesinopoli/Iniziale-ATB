@@ -1,4 +1,4 @@
-# Progetto-ATB
+Progetto-ATB
 
 ATBmain = File principale, starta il progetto da lì.
 ATBmoveDx = Funzione che permette il movimento del joint verso destra e l'aggiornamento del sensore di visione.
